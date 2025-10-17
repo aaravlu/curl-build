@@ -1,0 +1,35 @@
+name: Build rufus
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - name: Checkout rufus
+        uses: actions/checkout@v4
+        with:
+          repository: curl/curl
+          ref: refs/tags/curl-7_79_1
+          path: curl
+
+      - name: Setup msvc
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+          toolset: 14.29
+          sdk: 10.0.19041.0
+
+      - name: Build
+        working-directory: curl/winbuild/Makefile.vc
+        run: |
+          nmake /f Makefile.vc mode=DLL
+
+      - name: Archive binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: rufus
+          path: |
+            rufus/x64/Release/rufus.exe
