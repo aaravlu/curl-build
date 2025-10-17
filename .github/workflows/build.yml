@@ -25,7 +25,9 @@ jobs:
       - name: Modify
         run: |
           (Get-Content ".\curl\winbuild\MakefileBuild.vc" -Raw) `
-              -replace "/O2", "/Os" | Set-Content ".\curl\winbuild\MakefileBuild.vc"
+            -replace "/O2", "/Os" `
+            -replace "CFLAGS     =", "CFLAGS     = /arch:AVX2 /MD /MP /Oi /Os /Gy /GL /Gw /fp:fast /GR- /GS-" | `
+            Set-Content ".\curl\winbuild\MakefileBuild.vc"
 
           (Get-Content ".\curl\src\tool_hugehelp.c.cvs" -Raw) `
               -replace 'puts("This is a silly replacement for the actual file.");', ' ' | Set-Content ".\curl\src\tool_hugehelp.c"
