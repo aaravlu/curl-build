@@ -8,6 +8,9 @@ jobs:
   build:
     runs-on: windows-2022
     steps:
+      - name: Checkout self
+        uses: actions/checkout@v4
+
       - name: Checkout curl
         run: |
           curl.exe -L -o curl.zip "https://curl.se/download/curl-7.79.1.zip"
@@ -30,16 +33,12 @@ jobs:
 
       - name: Modify
         run: |
-          ls curl
-
           (Get-Content ".\curl\winbuild\MakefileBuild.vc" -Raw) `
             -replace "/O2", "/Os" `
             -replace "CFLAGS     =", "CFLAGS     = /arch:AVX2 /MD /MP /Oi /Os /Gy /GL /Gw /fp:fast /GR- /GS-" | `
             Set-Content ".\curl\winbuild\MakefileBuild.vc"
 
-          (Get-Content ".\curl\src\tool_hugehelp.c.cvs" -Raw) `
-            -replace 'puts("This is a silly replacement for the actual file.");', ' ' | `
-            Set-Content ".\curl\src\tool_hugehelp.c"
+          mv tool_hugehelp.c ".\curl\src\tool_hugehelp.c"
 
       - name: Build
         working-directory: curl\winbuild
