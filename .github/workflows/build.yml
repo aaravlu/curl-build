@@ -28,7 +28,7 @@ jobs:
         run: |
           (Get-Content ".\curl\winbuild\MakefileBuild.vc" -Raw) `
             -replace "/O2", "/Os" `
-            -replace "CFLAGS     =", "CFLAGS     = /arch:AVX2 /MD /MP /Oi /Os /Gy /GL /Gw /fp:fast /GR- /GS-" `
+            -replace "CFLAGS      =", "CFLAGS      = /arch:AVX2 /MD /MP /Oi /Os /Gy /GL /Gw /fp:fast /GR- /GS-" `
             -replace "LFLAGS     =", "LFLAGS     = /LTCG /MANIFEST:NO /MERGE:_RDATA=.rdata /OPT:REF /OPT:ICF" | `
             Set-Content ".\curl\winbuild\MakefileBuild.vc"
 
