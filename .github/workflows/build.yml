@@ -38,7 +38,7 @@ jobs:
             -replace "CFLAGS     =", "CFLAGS     = /arch:AVX2 /MD /MP /Oi /Os /Gy /GL /Gw /fp:fast /GR- /GS-" | `
             Set-Content ".\curl\winbuild\MakefileBuild.vc"
 
-          mv tool_hugehelp.c ".\curl\src\tool_hugehelp.c"
+          Move-Item -Path "tool_hugehelp.c" -Destination ".\curl\src\tool_hugehelp.c" -Force
 
       - name: Build
         working-directory: curl\winbuild
