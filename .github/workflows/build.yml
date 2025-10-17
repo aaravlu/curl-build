@@ -30,6 +30,8 @@ jobs:
 
       - name: Modify
         run: |
+          ls curl
+
           (Get-Content ".\curl\winbuild\MakefileBuild.vc" -Raw) `
             -replace "/O2", "/Os" `
             -replace "CFLAGS     =", "CFLAGS     = /arch:AVX2 /MD /MP /Oi /Os /Gy /GL /Gw /fp:fast /GR- /GS-" | `
