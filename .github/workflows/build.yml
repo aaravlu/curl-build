@@ -22,6 +22,12 @@ jobs:
           toolset: 14.29
           sdk: 10.0.19041.0
 
+      - name: Modify 'tool_hugehelp.c'
+        working-directory: curl\src
+        run: |
+          (Get-Content ".\curl\src\tool_hugehelp.c.csv" -Raw) `
+              -replace 'puts\("This is a silly replacement for the actual file\."\);', ' ' | Set-Content ".\data\file.txt"
+
       - name: Build
         working-directory: curl\winbuild
         run: |
