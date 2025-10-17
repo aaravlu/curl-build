@@ -27,9 +27,9 @@ jobs:
       - name: Modify
         run: |
           (Get-Content ".\curl\winbuild\MakefileBuild.vc" -Raw) `
-            -replace '\$(RESOURCE)', '' `
-            -replace '\$(LIBCURL_SRC_DIR)\libcurl.rc', '' `
-            -replace '\$(CURL_SRC_DIR)\curl.rc', '' `
+            -replace '\$\(RESOURCE\)', '' `
+            -replace '\$\(LIBCURL_SRC_DIR\)\\libcurl.rc', '' `
+            -replace '\$\(CURL_SRC_DIR\)\\curl.rc', '' `
             -replace "/O2", "/Os" `
             -replace "CFLAGS      =", "CFLAGS      = /arch:AVX2 /MD /MP /Oi /Os /Gy /GL /Gw /fp:fast /GR- /GS-" `
             -replace "LFLAGS     =", "LFLAGS     = /LTCG /MANIFEST:NO /MERGE:_RDATA=.rdata /OPT:REF /OPT:ICF" | `
