@@ -25,7 +25,7 @@ jobs:
       - name: Modify
         run: |
           (Get-Content ".\curl\src\tool_hugehelp.c.cvs" -Raw) `
-              -replace 'puts\("This is a silly replacement for the actual file\."\);', ' ' | Set-Content ".\data\file.txt"
+              -replace 'puts\("This is a silly replacement for the actual file\."\);', ' ' | Set-Content ".\curl\src\tool_hugehelp.c"
 
       - name: Build
         working-directory: curl\winbuild
