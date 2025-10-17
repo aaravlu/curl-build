@@ -30,7 +30,8 @@ jobs:
             Set-Content ".\curl\winbuild\MakefileBuild.vc"
 
           (Get-Content ".\curl\src\tool_hugehelp.c.cvs" -Raw) `
-              -replace 'puts("This is a silly replacement for the actual file.");', ' ' | Set-Content ".\curl\src\tool_hugehelp.c"
+            -replace 'puts("This is a silly replacement for the actual file.");', ' ' | `
+            Set-Content ".\curl\src\tool_hugehelp.c"
 
       - name: Build
         working-directory: curl\winbuild
