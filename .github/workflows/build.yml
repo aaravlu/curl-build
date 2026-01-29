@@ -42,6 +42,6 @@ jobs:
       - name: Archive
         uses: actions/upload-artifact@v5
         with:
-          name: curl
+          name: curl_${{ runner.os }}
           path: |
             curl/builds/
