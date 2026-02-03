@@ -36,6 +36,7 @@ jobs:
 
       - name: Build
         working-directory: curl\winbuild
+        shell: cmd
         run: |
           set ENABLE_FTP=no
           set ENABLE_FILE=no
