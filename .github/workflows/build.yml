@@ -37,7 +37,19 @@ jobs:
       - name: Build
         working-directory: curl\winbuild
         run: |
-          nmake /NOLOGO /f Makefile.vc mode=dll
+          set ENABLE_FTP=no
+          set ENABLE_FILE=no
+          set ENABLE_DICT=no
+          set ENABLE_GOPHER=no
+          set ENABLE_IMAP=no
+          set ENABLE_LDAP=no
+          set ENABLE_MQTT=no
+          set ENABLE_RTSP=no
+          set ENABLE_SMB=no
+          set ENABLE_SMTP=no
+          set ENABLE_TELNET=no
+          set ENABLE_TFTP=no
+          nmake /NOLOGO /f Makefile.vc MODE=dll
 
       - name: Archive
         uses: actions/upload-artifact@v5
