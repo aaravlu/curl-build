@@ -36,21 +36,11 @@ jobs:
 
       - name: Build
         working-directory: curl\winbuild
-        shell: cmd
         run: |
-          set ENABLE_FTP=no
-          set ENABLE_FILE=no
-          set ENABLE_DICT=no
-          set ENABLE_GOPHER=no
-          set ENABLE_IMAP=no
-          set ENABLE_LDAP=no
-          set ENABLE_MQTT=no
-          set ENABLE_RTSP=no
-          set ENABLE_SMB=no
-          set ENABLE_SMTP=no
-          set ENABLE_TELNET=no
-          set ENABLE_TFTP=no
-          nmake /NOLOGO /f Makefile.vc MODE=dll
+          nmake /NOLOGO /f Makefile.vc MODE=dll `
+          ENABLE_FTP=no ENABLE_FILE=no ENABLE_DICT=no ENABLE_GOPHER=no ENABLE_IMAP=no `
+          ENABLE_LDAP=no ENABLE_MQTT=no ENABLE_RTSP=no ENABLE_SMB=no ENABLE_SMTP=no `
+          ENABLE_TELNET=no ENABLE_TFTP=no
 
       - name: Archive
         uses: actions/upload-artifact@v5
