@@ -27,19 +27,6 @@ jobs:
       - name: Modify
         run: |
           Move-Item -Path "tool_hugehelp.c" -Destination ".\curl\src\tool_hugehelp.c" -Force
-
-
-      - name: Remove res file
-        working-directory: curl/winbuild
-        shell: pwsh
-        run: |
-          $content = Get-Content -Path "MakefileBuild.vc" -Raw -Encoding UTF8
-
-          # 1. 禁用 libcurl.res 和 curl.res 的生成
-          $content = $content -replace '\$\(RESOURCE\)', ''
-          $content = $content -replace '\$\(CURL_DIROBJ\)\\curl\.res', ''
-
-          Set-Content -Path "MakefileBuild.vc" -Value $content -Encoding UTF8
       
       - name: Build
         working-directory: curl/winbuild
