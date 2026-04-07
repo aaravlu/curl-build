@@ -30,7 +30,9 @@ jobs:
 
       - name: Build
         working-directory: curl/winbuild
+        shell: pwsh
         run: |
+          (Get-Content Makefile.vc) -replace '(\.res)', '' | Set-Content Makefile.vc
           nmake /NOLOGO /f Makefile.vc MODE=dll `
           RC= `
           CFLAGS="/arch:AVX2 /MD /MP /Oi /Os /Gy /GL /Gw /fp:fast /GR- /GS-" `
