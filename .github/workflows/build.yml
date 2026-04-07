@@ -28,13 +28,34 @@ jobs:
         run: |
           Move-Item -Path "tool_hugehelp.c" -Destination ".\curl\src\tool_hugehelp.c" -Force
 
+
+      - name: Remove res file
+        working-directory: curl/winbuild
+        shell: pwsh
+        run: |
+          $content = Get-Content -Path "MakefileBuild.vc" -Raw -Encoding UTF8
+
+          # 1. 禁用 libcurl.res 和 curl.res 的生成
+          $content = $content -replace '\$\(RESOURCE\)', ''
+          $content = $content -replace '\$\(CURL_DIROBJ\)\\curl\.res', ''
+
+          # 2. 强制不调用 rc.exe
+          $content = $content -replace 'RC\s*=\s*rc\.exe', 'RC = echo rc disabled'
+
+          # 3. 移除 manifest 处理（MANIFESTTOOL）
+          $content = $content -replace '\$\(MANIFESTTOOL\)', 'echo manifest disabled'
+
+          # 4. 在链接 curl.exe 时不带资源
+          $content = $content -replace 'EXE_OBJS = .*', 'EXE_OBJS = $(CURL_FROM_LIBCURL)'
+
+          Set-Content -Path "MakefileBuild.vc" -Value $content -Encoding UTF8
+          Write-Host "Makefile.vc patched to disable resources"
+      
       - name: Build
         working-directory: curl/winbuild
         shell: pwsh
         run: |
-          (Get-Content Makefile.vc) -replace '(\.res)', '' | Set-Content MakefileBuild.vc
           nmake /NOLOGO /f Makefile.vc MODE=dll `
-          RC= `
           CFLAGS="/arch:AVX2 /MD /MP /Oi /Os /Gy /GL /Gw /fp:fast /GR- /GS-" `
           LFLAGS="/LTCG /MANIFEST:NO /MERGE:_RDATA=.rdata /OPT:REF /OPT:ICF" `
           LDFLAGS="/LTCG /MANIFEST:NO /MERGE:_RDATA=.rdata /OPT:REF /OPT:ICF"
