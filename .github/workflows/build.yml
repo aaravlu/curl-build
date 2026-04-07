@@ -39,17 +39,7 @@ jobs:
           $content = $content -replace '\$\(RESOURCE\)', ''
           $content = $content -replace '\$\(CURL_DIROBJ\)\\curl\.res', ''
 
-          # 2. 强制不调用 rc.exe
-          $content = $content -replace 'RC\s*=\s*rc\.exe', 'RC = echo rc disabled'
-
-          # 3. 移除 manifest 处理（MANIFESTTOOL）
-          $content = $content -replace '\$\(MANIFESTTOOL\)', 'echo manifest disabled'
-
-          # 4. 在链接 curl.exe 时不带资源
-          $content = $content -replace 'EXE_OBJS = .*', 'EXE_OBJS = $(CURL_FROM_LIBCURL)'
-
           Set-Content -Path "MakefileBuild.vc" -Value $content -Encoding UTF8
-          Write-Host "Makefile.vc patched to disable resources"
       
       - name: Build
         working-directory: curl/winbuild
