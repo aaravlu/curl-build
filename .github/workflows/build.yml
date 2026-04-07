@@ -28,16 +28,11 @@ jobs:
         run: |
           Move-Item -Path "tool_hugehelp.c" -Destination ".\curl\src\tool_hugehelp.c" -Force
 
-      # (Get-Content ".\curl\winbuild\MakefileBuild.vc" -Raw) `
-      #   -replace "/O2", "/Os" `
-      #   -replace "CFLAGS      =", "CFLAGS      = /arch:AVX2 /MD /MP /Oi /Os /Gy /GL /Gw /fp:fast /GR- /GS-" `
-      #   -replace "LFLAGS     =", "LFLAGS     = /LTCG /MANIFEST:NO /MERGE:_RDATA=.rdata /OPT:REF /OPT:ICF" | `
-      #   Set-Content ".\curl\winbuild\MakefileBuild.vc"
-
       - name: Build
         working-directory: curl/winbuild
         run: |
           nmake /NOLOGO /f Makefile.vc MODE=dll `
+          RC= `
           CFLAGS="/arch:AVX2 /MD /MP /Oi /Os /Gy /GL /Gw /fp:fast /GR- /GS-" `
           LFLAGS="/LTCG /MANIFEST:NO /MERGE:_RDATA=.rdata /OPT:REF /OPT:ICF" `
           LDFLAGS="/LTCG /MANIFEST:NO /MERGE:_RDATA=.rdata /OPT:REF /OPT:ICF"
